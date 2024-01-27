@@ -10,24 +10,22 @@ resources_search_details = oci.resource_search.models.StructuredSearchDetails(qu
 resources_search_response = search_client.search_resources(resources_search_details)
 # Get Resource's details
 for resource in resources_search_response.data.items:
-        if resource.resource_type.lower() == "vcn" : 
+        if resource.resource_type == "Vcn" : 
          resdetail = network_client.get_vcn(vcn_id=resource.identifier).data
-        elif resource.resource_type.lower() == "subnet" : 
+        elif resource.resource_type == "Subnet" : 
          resdetail = network_client.get_subnet(subnet_id=resource.identifier).data
-        elif resource.resource_type.lower() == "securitylist" : 
+        elif resource.resource_type == "SecurityList" : 
          resdetail = network_client.get_security_list(security_list_id=resource.identifier).data
-        elif resource.resource_type.lower() == "networksecuritygroup" : 
+        elif resource.resource_type == "NetworkSecurityGroup" : 
          resdetail = network_client.get_network_security_group(network_security_group_id=resource.identifier).data
-        elif resource.resource_type.lower() == "servicegateway" : 
+        elif resource.resource_type == "ServiceGateway" : 
          resdetail = network_client.get_service_gateway(service_gateway_id=resource.identifier).data
-        elif resource.resource_type.lower() == "internetgateway" : 
+        elif resource.resource_type == "InternetGateway" : 
          resdetail = network_client.get_internet_gateway(ig_id=resource.identifier).data
-        elif resource.resource_type.lower() == "natgateway" : 
+        elif resource.resource_type == "NatGateway" : 
          resdetail = network_client.get_nat_gateway(nat_gateway_id=resource.identifier).data
-        elif resource.resource_type.lower() == "routetable" : 
+        elif resource.resource_type == "RouteTable" : 
          resdetail = network_client.get_route_table(rt_id=resource.identifier).data
-        elif resource.resource_type == "Drg" : 
-         resdetail = network_client.get_drg(drg_id=resource.identifier).data
         elif resource.resource_type == "DrgAttachment" : 
          resdetail = network_client.get_drg_attachment(drg_attachment_id=resource.identifier).data
         elif resource.resource_type == "DrgRouteDistribution" : 
@@ -43,6 +41,6 @@ for resource in resources_search_response.data.items:
         elif resource.resource_type == "Ipv6" : 
          resdetail = network_client.get_ipv6(ipv6_id=resource.identifier).data
         # Write output to files
-        with open(f"{resource.compartment_id}_{resource.resource_type}_{resource.display_name}.json", "w") as f:
+        with open(f"{resource.compartment_id}_{resource.resource_type.lower()}_{resource.display_name}.json", "w") as f:
           print(f"{resdetail}", file=f)
 
